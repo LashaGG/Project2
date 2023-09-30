@@ -1,11 +1,16 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="SwoopGeSuite">
     <listeners>
-        <listener class-name="SwoopGeUsingAllure" />
+        <listener class-name="SwoopGeTest"/>
     </listeners>
-    <test name="SwoopGeTest">
+    <test name="test">
+        <groups>
+            <run>
+                <include name="SwoopGeGroup"/>
+            </run>
+        </groups>
         <classes>
-            <class name="SwoopGeUsingAllure"/>
+            <class name="SwoopGeTest"/>
         </classes>
     </test>
 </suite>
