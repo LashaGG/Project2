@@ -1,32 +1,32 @@
 package Steps;
 
-import Pages.SwoopGeDasvenebaPage;
-import Pages.SwoopGeMainPage;
+import Pages.DasvenebaPage;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 
+import static com.codeborne.selenide.Condition.enabled;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class DasvenebaPageSteps {
-    public SwoopGeDasvenebaPage page = new SwoopGeDasvenebaPage();
+    public DasvenebaPage page = new DasvenebaPage();
 
 
     @Step("Set Min Price: {0}")
     public DasvenebaPageSteps setMinPrice(Integer minPrice) {
-        page.minPriceInput.scrollTo().sendKeys(minPrice.toString());
+        page.minPriceInput.scrollIntoView(false).sendKeys(minPrice.toString());
         return this;
     }
 
     @Step("Set Max Price: {0}")
     public DasvenebaPageSteps setMaxPrice(Integer maxPrice) {
-        page.minPriceInput.scrollTo().sendKeys(maxPrice.toString());
+        page.maxPriceInput.scrollIntoView(false).sendKeys(maxPrice.toString());
         return this;
     }
 
-    @Step("Accept Cookies")
-    public DasvenebaPageSteps acceptCookies() {
-        new MainPageSteps().acceptCookies();
+    @Step
+    public DasvenebaPageSteps clickOnDzebnaButton() {
+        Selenide.executeJavaScript("arguments[0].click()",page.dzebnaButton);
         return this;
     }
 

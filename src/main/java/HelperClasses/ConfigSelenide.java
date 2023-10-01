@@ -56,6 +56,7 @@ public abstract class ConfigSelenide implements ITestListener {
         Configuration.fileDownload = FileDownloadMode.HTTPGET;
         Configuration.browserSize = "1920x1080";
 
+
         setUpWebDriver(browser);
     }
 
