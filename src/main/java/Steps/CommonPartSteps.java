@@ -13,6 +13,13 @@ public class CommonPartSteps extends HeaderPageSteps {
 
     public CommonPartPageObject page = new CommonPartPageObject();
 
+    private void waitUntilJQueryIsActive() {
+        Selenide.Wait().until(webDriver -> {
+            return (Boolean) ((JavascriptExecutor) webDriver)
+                    .executeScript("return jQuery.active == 0");
+        });
+    }
+
     @Step("Set Min Price: {0}")
     public CommonPartSteps setMinPrice(Integer minPrice) {
         page.minPriceInput.scrollIntoView(false).sendKeys(minPrice.toString());
@@ -28,10 +35,7 @@ public class CommonPartSteps extends HeaderPageSteps {
     @Step("Click on 'ძებნა' Button and Wait Until jQuery Requests Complete")
     public CommonPartSteps clickOnDzebnaButton() {
         Selenide.executeJavaScript("arguments[0].click()", page.dzebnaButton.shouldHave(Condition.exist));
-        Selenide.Wait().until(webDriver -> {
-            return (Boolean) ((JavascriptExecutor) webDriver)
-                    .executeScript("return jQuery.active == 0");
-        });
+        waitUntilJQueryIsActive();
         return this;
     }
 
@@ -39,6 +43,13 @@ public class CommonPartSteps extends HeaderPageSteps {
     public CommonPartSteps addFirstOfferToFavorites() {
         var offer = page.specialOffersList.get(0);
         offer.$(".dis-price").click();
+        return this;
+    }
+
+    @Step("Sort By Price Decrease")
+    public CommonPartSteps selectSortByPriceDecrease() {
+        page.sortSelect.selectOptionContainingText("ფასით კლებადი");
+        waitUntilJQueryIsActive();
         return this;
     }
 

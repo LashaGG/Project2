@@ -18,6 +18,7 @@ public class CommonPartPageObject extends HeaderPageObject {
                     "and not(contains(@style, 'text-decoration: line-through;'))]")).filterBy(visible);
 
     public SelenideElement
+            sortSelect = $("#sort"),
             minPriceInput = $("#minprice", 1),
             maxPriceInput = $("#maxprice", 1),
             dzebnaButton = $(".submit-button", 1);

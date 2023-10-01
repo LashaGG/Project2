@@ -9,6 +9,7 @@ import com.codeborne.selenide.SelenideWait;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.testng.SoftAsserts;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.springframework.context.annotation.Description;
@@ -73,11 +74,9 @@ public class SwoopGeTest extends ConfigSelenide {
             """)
     @Test(description = "SwoopGe 'კვება' Test", groups = "SwoopGeGroup")
     public void secondTest() {
-        HeaderPageSteps main;
-
         open("https://www.swoop.ge/");
 
-        main = new HeaderPageSteps();
+        var main = new HeaderPageSteps();
         main.acceptCookies()
                 .clickOnCategoriesArrow()
                 .hoverKvebaCategory()
@@ -94,35 +93,39 @@ public class SwoopGeTest extends ConfigSelenide {
         int limit = Integer.parseInt(Objects.requireNonNull(offer.$(".voucher-limit").getAttribute("data-width")));
         softAssert.assertTrue(0 <= limit && limit < 100);
 
-
         softAssert.assertAll();
     }
 
-//    @Story("Meals")
-//    @Description("""
-//            - Go to კატეგორიები
-//            - Hover on „კვება“ and click on სუში
-//            - Sort elements with ფასით კლებადი
-//            - Check that the price of the first item is higher than the price of the second item
-//            """)
-//    @Test(description = "SwoopGe 'კვება' Test", groups = "SwoopGeGroup")
-//    public void thirdTest() {
-//        HeaderPageSteps main;
-//
-//        open("https://www.swoop.ge/");
-//
-//        main = new HeaderPageSteps();
-//        main.acceptCookies()
-//                .clickOnCategoriesArrow()
-//                .hoverKvebaCategory()
-//                .clickOnSusiSubcategory();
-//
-//        var kveba = new KvebaDefaultPageSteps();
-//        var prices = kveba.page.salesPricesList;
-//
-//
-//        softAssert.assertAll();
-//    }
+    @Story("Meals")
+    @Description("""
+            - Go to კატეგორიები
+            - Hover on „კვება“ and click on სუში
+            - Sort elements with ფასით კლებადი
+            - Check that the price of the first item is higher than the price of the second item
+            """)
+    @Test(description = "SwoopGe 'კვება' elements Sort Test", groups = "SwoopGeGroup")
+    public void thirdTest() {
+        HeaderPageSteps main;
+
+        open("https://www.swoop.ge/");
+
+        main = new HeaderPageSteps();
+        main.acceptCookies()
+                .clickOnCategoriesArrow()
+                .hoverKvebaCategory()
+                .clickOnSusiSubcategory();
+
+        var kveba = new KvebaPageSteps();
+
+        kveba.selectSortByPriceDecrease();
+
+        String firstsPrice = kveba.page.salesPricesList.get(0).getText().replaceAll("[^0-9]", ""),
+               secondsPrice =kveba.page.salesPricesList.get(1).getText().replaceAll("[^0-9]", "");
+
+        softAssert.assertTrue(Integer.parseInt(firstsPrice) > Integer.parseInt(secondsPrice));
+
+        softAssert.assertAll();
+    }
 
 
 }
