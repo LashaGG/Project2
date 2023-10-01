@@ -1,16 +1,20 @@
 import HelperClasses.ConfigSelenide;
+import Pages.DasvenebaPageObject;
 import Steps.DasvenebaPageSteps;
 import Steps.HeaderPageSteps;
-import Steps.KvebaDefaultPageSteps;
+import Steps.KvebaPageSteps;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.SelenideWait;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.testng.SoftAsserts;
 import io.qameta.allure.Epic;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.springframework.context.annotation.Description;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.Objects;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -20,6 +24,9 @@ import static com.codeborne.selenide.Selenide.*;
 @Listeners({SoftAsserts.class})
 public class SwoopGeTest extends ConfigSelenide {
 
+    public SwoopGeTest() {
+        super(20, "chrome");
+    }
 
     @Epic("Recreation")
     @Description("""
@@ -45,16 +52,11 @@ public class SwoopGeTest extends ConfigSelenide {
         int minPrice = 200, maxPrice = 230;
         dasveneba.setMinPrice(200).setMaxPrice(230).clickOnDzebnaButton();
 
-        List<SelenideElement> PricesList = dasveneba.page.currentPricesList;
-
-        Selenide.sleep(5000);
-        PricesList.stream()
-                .filter(e -> e.is(visible))
+        new DasvenebaPageObject().salesPricesList.stream()
                 .map(SelenideElement::getText)
                 .map(t -> t.substring(0, t.length() - 1))
                 .map(Integer::parseInt)
                 .forEach(e -> {
-                    System.out.println(e);
                     softAssert.assertTrue(e <= maxPrice && e >= minPrice - 100);
                 });
 
@@ -81,7 +83,7 @@ public class SwoopGeTest extends ConfigSelenide {
                 .hoverKvebaCategory()
                 .clickOnSusiSubcategory();
 
-        var kveba = new KvebaDefaultPageSteps();
+        var kveba = new KvebaPageSteps();
         kveba.addFirstOfferToFavorites();
 
 
@@ -95,5 +97,32 @@ public class SwoopGeTest extends ConfigSelenide {
 
         softAssert.assertAll();
     }
+
+//    @Story("Meals")
+//    @Description("""
+//            - Go to კატეგორიები
+//            - Hover on „კვება“ and click on სუში
+//            - Sort elements with ფასით კლებადი
+//            - Check that the price of the first item is higher than the price of the second item
+//            """)
+//    @Test(description = "SwoopGe 'კვება' Test", groups = "SwoopGeGroup")
+//    public void thirdTest() {
+//        HeaderPageSteps main;
+//
+//        open("https://www.swoop.ge/");
+//
+//        main = new HeaderPageSteps();
+//        main.acceptCookies()
+//                .clickOnCategoriesArrow()
+//                .hoverKvebaCategory()
+//                .clickOnSusiSubcategory();
+//
+//        var kveba = new KvebaDefaultPageSteps();
+//        var prices = kveba.page.salesPricesList;
+//
+//
+//        softAssert.assertAll();
+//    }
+
 
 }

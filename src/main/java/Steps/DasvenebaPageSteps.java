@@ -1,34 +1,33 @@
 package Steps;
 
-import Pages.DasvenebaPage;
-import com.codeborne.selenide.Selenide;
-import io.qameta.allure.Step;
+import Pages.DasvenebaPageObject;
 
-import static com.codeborne.selenide.Condition.enabled;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
-public class DasvenebaPageSteps {
-    public DasvenebaPage page = new DasvenebaPage();
+public class DasvenebaPageSteps extends CommonPartSteps {
+    public DasvenebaPageObject page = new DasvenebaPageObject();
 
-
-    @Step("Set Min Price: {0}")
+    @Override
     public DasvenebaPageSteps setMinPrice(Integer minPrice) {
-        page.minPriceInput.scrollIntoView(false).sendKeys(minPrice.toString());
-        return this;
+        super.setMinPrice(minPrice);
+        return new DasvenebaPageSteps();
     }
 
-    @Step("Set Max Price: {0}")
+    @Override
     public DasvenebaPageSteps setMaxPrice(Integer maxPrice) {
-        page.maxPriceInput.scrollIntoView(false).sendKeys(maxPrice.toString());
-        return this;
+        super.setMaxPrice(maxPrice);
+        return new DasvenebaPageSteps();
     }
 
-    @Step
+    @Override
     public DasvenebaPageSteps clickOnDzebnaButton() {
-        Selenide.executeJavaScript("arguments[0].click()",page.dzebnaButton);
-        return this;
+        super.clickOnDzebnaButton();
+        return new DasvenebaPageSteps();
     }
 
-
+    @Override
+    public DasvenebaPageSteps addFirstOfferToFavorites() {
+        super.addFirstOfferToFavorites();
+        return new DasvenebaPageSteps();
+    }
 }

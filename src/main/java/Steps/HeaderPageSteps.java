@@ -1,13 +1,15 @@
 package Steps;
 
-import Pages.HeaderPage;
+import Pages.HeaderPageObject;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class HeaderPageSteps {
-    HeaderPage page;
+    HeaderPageObject page;
 
     public HeaderPageSteps() {
-        page = new HeaderPage();
+        page = new HeaderPageObject();
     }
 
     @Step("Accept Cookies")
@@ -23,9 +25,9 @@ public class HeaderPageSteps {
     }
 
     @Step("clicks on კვება button on Header")
-    public KvebaDefaultPageSteps clickOnKvebaButton() {
+    public KvebaPageSteps clickOnKvebaButton() {
         page.kvebaButton.click();
-        return new KvebaDefaultPageSteps();
+        return new KvebaPageSteps();
     }
 
     @Step("clicks on categories arrow on Header")
