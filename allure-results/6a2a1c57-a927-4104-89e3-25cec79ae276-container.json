@@ -1,0 +1,1 @@
+{"uuid":"6a2a1c57-a927-4104-89e3-25cec79ae276","name":"SwoopGeSuite","children":["2382bac0-dc1e-4dac-82d7-c5c0f43b3bf1"],"befores":[{"name":"configureSelenide","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1696241227001,"stop":1696241227478}],"afters":[],"start":1696241226965,"stop":1696241254161}

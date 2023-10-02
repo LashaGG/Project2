@@ -1,17 +1,15 @@
 package Steps;
 
-import Pages.CommonPartPageObject;
+import Pages.ProductsAndServicesPageObject;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideWait;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 
-public class CommonPartSteps extends HeaderPageSteps {
+public class ProductsAndServicesSteps implements IProductsAndServicesSteps {
 
-    public CommonPartPageObject page = new CommonPartPageObject();
+
+    public ProductsAndServicesPageObject page = new ProductsAndServicesPageObject();
 
     private void waitUntilJQueryIsActive() {
         Selenide.Wait().until(webDriver -> {
@@ -20,34 +18,41 @@ public class CommonPartSteps extends HeaderPageSteps {
         });
     }
 
+    @Step("Click on Prdouct N:{0}")
+    public ProductsAndServicesSteps clickOnProduct(int index) {
+        page.specialOffersList.get(index).scrollIntoView(false).click();
+        return this;
+    }
+
+
     @Step("Set Min Price: {0}")
-    public CommonPartSteps setMinPrice(Integer minPrice) {
+    public ProductsAndServicesSteps setMinPrice(Integer minPrice) {
         page.minPriceInput.scrollIntoView(false).sendKeys(minPrice.toString());
         return this;
     }
 
     @Step("Set Max Price: {0}")
-    public CommonPartSteps setMaxPrice(Integer maxPrice) {
+    public ProductsAndServicesSteps setMaxPrice(Integer maxPrice) {
         page.maxPriceInput.scrollIntoView(false).sendKeys(maxPrice.toString());
         return this;
     }
 
     @Step("Click on 'ძებნა' Button and Wait Until jQuery Requests Complete")
-    public CommonPartSteps clickOnDzebnaButton() {
+    public ProductsAndServicesSteps clickOnDzebnaButton() {
         Selenide.executeJavaScript("arguments[0].click()", page.dzebnaButton.shouldHave(Condition.exist));
         waitUntilJQueryIsActive();
         return this;
     }
 
     @Step("add first returned item to favorites list")
-    public CommonPartSteps addFirstOfferToFavorites() {
+    public ProductsAndServicesSteps addFirstOfferToFavorites() {
         var offer = page.specialOffersList.get(0);
         offer.$(".dis-price").click();
         return this;
     }
 
     @Step("Sort By Price Decrease")
-    public CommonPartSteps selectSortByPriceDecrease() {
+    public ProductsAndServicesSteps selectSortByPriceDecrease() {
         page.sortSelect.selectOptionContainingText("ფასით კლებადი");
         waitUntilJQueryIsActive();
         return this;

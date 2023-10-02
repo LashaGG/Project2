@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class CommonPartPageObject extends HeaderPageObject {
+public class ProductsAndServicesPageObject {
 
     public SelenideElement Categories = $("#sidebar").$(".category-ul.main-category-ul");
     public List<SelenideElement>

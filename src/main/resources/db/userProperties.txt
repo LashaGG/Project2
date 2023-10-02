@@ -1,0 +1,6 @@
+db.url=jdbc:sqlserver://localhost:1433;
+db.username=user=testAutomation;
+db.password=password=Testautomation123;
+db.config=trustServerCertificate=true;encrypt=true;
+db.name=databaseName=Users;
+db.connectionUrl=jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=Users;user=testAutomation;password=Testautomation123;

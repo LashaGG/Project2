@@ -19,7 +19,8 @@ public class HeaderPageObject {
     public SelenideElement //Header Buttons;
             dasvenebaButton = Menus.$(byText("დასვენება")),
             kvebaButton = Menus.$(byText("კვება")),
-            categoiresArrow = $(".categoriesArrow");
+            categoiresArrow = $(".categoriesArrow"),
+            login = $(".swoop-login");
 
     public SelenideElement //Categoires
             kinoCategory = $(By.cssSelector("[cat_id='CatId-0']")),

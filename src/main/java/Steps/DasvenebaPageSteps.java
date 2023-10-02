@@ -5,41 +5,53 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class DasvenebaPageSteps extends CommonPartSteps {
+public class DasvenebaPageSteps implements IProductsAndServicesSteps {
     public DasvenebaPageObject page = new DasvenebaPageObject();
+
+    @Step
+    public DasvenebaPageSteps clickOnMtisKurortiCategory() {
+        page.mtisKurortiCategory.scrollIntoView(false).click();
+        return this;//დავამატე რათა რამე განსხვავება ყოფილიყო
+    }
+
+    @Override
+    public DasvenebaPageSteps clickOnProduct(int index) {
+        new ProductsAndServicesSteps().clickOnProduct(index);
+        return this;
+    }
 
     @Override
     @Step("Set Min Price: {0}")
     public DasvenebaPageSteps setMinPrice(Integer minPrice) {
-        super.setMinPrice(minPrice);
+        new ProductsAndServicesSteps().setMinPrice(minPrice);
         return this;
     }
 
     @Override
     @Step("Set Max Price: {0}")
     public DasvenebaPageSteps setMaxPrice(Integer maxPrice) {
-        super.setMaxPrice(maxPrice);
+        new ProductsAndServicesSteps().setMaxPrice(maxPrice);
         return this;
     }
 
     @Override
     @Step("Click on 'ძებნა' Button and Wait Until jQuery Requests Complete")
     public DasvenebaPageSteps clickOnDzebnaButton() {
-        super.clickOnDzebnaButton();
+        new ProductsAndServicesSteps().clickOnDzebnaButton();
         return this;
     }
 
     @Override
     @Step("add first returned item to favorites list")
     public DasvenebaPageSteps addFirstOfferToFavorites() {
-        super.addFirstOfferToFavorites();
+        new ProductsAndServicesSteps().addFirstOfferToFavorites();
         return this;
     }
 
     @Override
     @Step("Sort By Price Decrease")
     public DasvenebaPageSteps selectSortByPriceDecrease() {
-        super.selectSortByPriceDecrease();
+        new ProductsAndServicesSteps().selectSortByPriceDecrease();
         return this;
     }
 }

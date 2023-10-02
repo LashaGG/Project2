@@ -18,6 +18,12 @@ public class HeaderPageSteps {
         return this;
     }
 
+    @Step("Login")
+    public HeaderPageSteps clickOnLoginButton() {
+        page.login.click();
+        return this;
+    }
+
     @Step("clicks on დასვენება button on Header")
     public DasvenebaPageSteps clickOnDasvenebaButton() {
         page.dasvenebaButton.click();
