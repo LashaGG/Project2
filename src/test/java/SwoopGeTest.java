@@ -1,10 +1,7 @@
 import Data.DataBases.UsersDataBase;
 import HelperClasses.ConfigSelenide;
 import Pages.DasvenebaPageObject;
-import Steps.DasvenebaPageSteps;
-import Steps.HeaderPageSteps;
-import Steps.KvebaPageSteps;
-import Steps.ProductSteps;
+import Steps.*;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.testng.SoftAsserts;
@@ -18,6 +15,7 @@ import org.testng.annotations.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -170,11 +168,28 @@ public class SwoopGeTest extends ConfigSelenide {
 
         ResultSet user = db.executeQuery("SELECT TOP 1 * FROM Users ORDER BY id DESC");
         user.next();
+        String[] dateParts = user.getString(6).split("-");
+        String date = dateParts[2] + dateParts[1] + dateParts[0];
+
 
         new HeaderPageSteps().clickOnLoginButton();
-        Selenide.sleep(10000);
 
 
+        var loginPagesSteps = new LoginPageSteps();
+
+        loginPagesSteps
+                .clickRegistration()
+                .enterFirstName(user.getString(2))
+                .enterLastName(user.getString(3))
+                .enterPhoneNumber(user.getString(4))
+                .enterEmail(user.getString(5))
+                .enterDateOfBirth(date)
+                .enterPassword(user.getString(7))
+                .enterConfirmPassword(user.getString(7))
+                .clickOnRegisterButton();
+
+        softAssert.assertEquals(loginPagesSteps.page.physicalInfoMassage.getText(), "გთხოვთ აირჩიოთ სქესი!");
+        
         softAssert.assertAll();
     }
 
