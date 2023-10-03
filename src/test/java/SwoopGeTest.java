@@ -1,80 +1,80 @@
 import Data.DataBases.UsersDataBase;
 import HelperClasses.ConfigSelenide;
 import Pages.DasvenebaPageObject;
+import Pages.LoginPageObject;
 import Steps.*;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.testng.SoftAsserts;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.springframework.context.annotation.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
+
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 
 @Listeners({SoftAsserts.class})
+@Epic("SwoopGe Regression Tests")
 public class SwoopGeTest extends ConfigSelenide {
     public SwoopGeTest() {
-        super(60, "chrome");
+        super(30, "chrome");
     }
 
-
-    @Test(enabled = false)
-    public void goToSushi() {
-        HeaderPageSteps main;
-
-        main = new HeaderPageSteps();
-        main.acceptCookies()
-                .clickOnCategoriesArrow()
-                .hoverKvebaCategory()
-                .clickOnSusiSubcategory();
-
-    }
-
-    @BeforeMethod
-    public void openDemoqa() {
+    @BeforeMethod(alwaysRun = true)
+    public void openSwoopGe() {
         open("https://www.swoop.ge/");
     }
 
+    @Test(enabled = false)
+    @Description("""
+            Go to კატეგორიები;
+            Hover on „კვება“ and click on „სუში“
+            """)
+    public void goToSushi() {
+        new HeaderPageSteps()
+                .acceptCookies()
+                .clickOnCategoriesArrow()
+                .hoverKvebaCategory()
+                .clickOnSusiSubcategory();
+    }
 
     @Epic("Recreation")
     @Description("""
               Test to validate the price ranges on Swoop.ge:
-              - Go to  „დასვენება“
-              - In  „ფასი“ element put range from 200 to 230
-              - Check that all returned elements on the first page are in selected range
+               Go to  „დასვენება“
+               In  „ფასი“ element put range from 200 to 230
+               Check that all returned elements on the first page are in selected range
             """)
-    @Test(description = "SwoopGe  „დასვენება' Test", groups = "SwoopGeGroup")
+    @Test(description = "SwoopGe  „დასვენება' Prices Scope Test", groups = "Regression1")
     public void firstTest() {
-
-        HeaderPageSteps main;
-        DasvenebaPageSteps dasveneba;
-
-        main = new HeaderPageSteps();
-        main.acceptCookies();
-        main.clickOnDasvenebaButton();
-
-        dasveneba = new DasvenebaPageSteps();
-
         int minPrice = 200, maxPrice = 230;
-        dasveneba.setMinPrice(200).setMaxPrice(230).clickOnDzebnaButton();
 
-        new DasvenebaPageObject().salesPricesList.stream()
+        new HeaderPageSteps()
+                .acceptCookies()
+                .clickOnDasvenebaButton();
+
+        new DasvenebaPageSteps()
+                .setMinPrice(200)
+                .setMaxPrice(230)
+                .clickOnDzebnaButton()
+                .page
+                .salesPricesList.stream()
                 .map(SelenideElement::getText)
                 .map(t -> t.substring(0, t.length() - 1))
                 .map(Integer::parseInt)
-                .forEach(e -> softAssert.assertTrue(e <= maxPrice && e >= minPrice - 100));
+                .forEach(e -> {
+                    softAssert.assertTrue(e >= minPrice, "Price " + e + " is below Minimum Price: " + minPrice);
+                    softAssert.assertTrue(e <= maxPrice, "Price " + e + " is above Maximum Price: " + maxPrice);
+                });
 
         softAssert.assertAll();
     }
@@ -82,24 +82,25 @@ public class SwoopGeTest extends ConfigSelenide {
 
     @Epic("Meals")
     @Description("""
-              - Go to კატეგორიები;
-              - Hover on „კვება“ and click on „სუში“
-              - Try to add first returned item to favorites list and verify that Login Window has appeared
-              - Check that the vouchers are not sold out (See picture below)
+               Go to კატეგორიები;
+               Hover on „კვება“ and click on „სუში“
+               Try to add first returned item to favorites list and verify that Login Window has appeared
+               Check that the vouchers are not sold out (See picture below)
             """)
-    @Test(description = "SwoopGe 'კვება' Test", groups = "SwoopGeGroup")
+    @Test(description = "SwoopGe 'კვება' vouchers Test", groups = "Regression2")
     public void secondTest() {
         goToSushi();
 
         var kveba = new KvebaPageSteps();
         kveba.addFirstOfferToFavorites();
 
-
-        $("#login-content-1").shouldBe(visible);
+        new LoginPageObject().registrationSection.shouldBe(visible);
 
         SelenideElement offer = kveba.page.specialOffersList.get(0);
 
-        int limit = Integer.parseInt(Objects.requireNonNull(offer.$(".voucher-limit").getAttribute("data-width")));
+        int limit =
+                Integer.parseInt(Objects.requireNonNull(offer.$(".voucher-limit").getAttribute("data-width")));
+
         softAssert.assertTrue(0 <= limit && limit < 100);
 
         softAssert.assertAll();
@@ -107,12 +108,12 @@ public class SwoopGeTest extends ConfigSelenide {
 
     @Story("Meals")
     @Description("""
-            - Go to კატეგორიები
-            - Hover on „კვება“ and click on სუში
-            - Sort elements with ფასით კლებადი
-            - Check that the price of the first item is higher than the price of the second item
+             Go to კატეგორიები
+             Hover on „კვება“ and click on სუში
+             Sort elements with ფასით კლებადი
+             Check that the price of the first item is higher than the price of the second item
             """)
-    @Test(description = "SwoopGe 'კვება' elements Sort Test", groups = "SwoopGeGroup")
+    @Test(description = "SwoopGe 'კვება' elements Sort Test", groups = "Regression3")
     public void thirdTest() {
         goToSushi();
 
@@ -131,13 +132,13 @@ public class SwoopGeTest extends ConfigSelenide {
 
     @Feature("Facebook Share")
     @Description("""
-            - Go to კატეგორიები
-            - Hover on „კვება“ and click on სუში
-            - Navigate to the first returned item
-            -Click on ‘გაზიარება’
-            -Validate that window with Facebook login page has appeared
+             Go to კატეგორიები
+             Hover on „კვება“ and click on სუში
+             Navigate to the first returned item
+             Click on ‘გაზიარება’
+             Validate that window with Facebook login page has appeared
             """)
-    @Test(description = "SwoopGe Share Test", groups = "SwoopGeGroup")
+    @Test(description = "SwoopGe Share Test", groups = "Regression4")
     public void forthTest() {
         goToSushi();
 
@@ -148,48 +149,53 @@ public class SwoopGeTest extends ConfigSelenide {
 
         softAssert.assertEquals($("#homelink").getText(), "Facebook");
 
+        switchTo().window(0);
+
         softAssert.assertAll();
     }
 
 
     @Epic("Registration")
     @Description("""
-            - Generate data for new user and insert it into the database
-            - Register for new account ფიზიკური პირი;
-            - Fill all mandatory fields, except Gender
-            - Check that error message ‘გთხოვთ აირჩიოთ სქესი!’ is appear
+             Generate data for new user and insert it into the database
+             Register for new account ფიზიკური პირი;
+             Fill all mandatory fields, except Gender
+             Check that error message ‘გთხოვთ აირჩიოთ სქესი!’ is appear
             """)
-    @Test(description = "SwoopGe Registration", groups = "SwoopGeGroup")
+    @Test(description = "SwoopGe Registration", groups = {"Regression5", "data-driven"})
     public void fifthTest() throws SQLException {
         var db = new UsersDataBase();
+        db.setAutoCommit(false);
 
-        db.insertUser("Lasha", "Giorgadze", "551197560",
+        int a = db.insertUser("Lasha", "Giorgadze", "551197560",
                 "lashagiorgadze7777@gmail.com", "03-11-2004", "qwerty123");
+
+        softAssert.assertEquals(a, 1, "User Was not Added");
 
         ResultSet user = db.executeQuery("SELECT TOP 1 * FROM Users ORDER BY id DESC");
         user.next();
         String[] dateParts = user.getString(6).split("-");
         String date = dateParts[2] + dateParts[1] + dateParts[0];
 
-
         new HeaderPageSteps().clickOnLoginButton();
 
+        var login = new LoginPageSteps();
 
-        var loginPagesSteps = new LoginPageSteps();
+        login
+            .clickRegistration()
+            .enterFirstName(user.getString(2))
+            .enterLastName(user.getString(3))
+            .enterPhoneNumber(user.getString(4))
+            .enterEmail(user.getString(5))
+            .enterDateO log
+    fBirth(date)
+            .enterPassword(user.getString(7))
+            .enterConfirmPassword(user.getString(7))
+            .clickOnRegisterButton();
 
-        loginPagesSteps
-                .clickRegistration()
-                .enterFirstName(user.getString(2))
-                .enterLastName(user.getString(3))
-                .enterPhoneNumber(user.getString(4))
-                .enterEmail(user.getString(5))
-                .enterDateOfBirth(date)
-                .enterPassword(user.getString(7))
-                .enterConfirmPassword(user.getString(7))
-                .clickOnRegisterButton();
+        softAssert.assertEquals(login.page.physicalInfoMassage.getText(), "გთხოვთ აირჩიოთ სქესი!");
 
-        softAssert.assertEquals(loginPagesSteps.page.physicalInfoMassage.getText(), "გთხოვთ აირჩიოთ სქესი!");
-        
+        db.rollback();
         softAssert.assertAll();
     }
 

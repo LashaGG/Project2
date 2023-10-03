@@ -16,19 +16,12 @@ import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
 @Listeners({SoftAsserts.class})
-public abstract class ConfigSelenide implements ITestListener {
-    @Attachment(value = "Page screenshot", type = "image/png")
-    public byte[] attachScreenshot(WebDriver driver) {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-    }
+public abstract class ConfigSelenide extends Listener {
 
-    @Override
-    public void onTestFailure(ITestResult result) {
-        attachScreenshot(Selenide.webdriver().object());
-    }
 
     protected String browser;
     protected int waitSeconds;
@@ -55,9 +48,6 @@ public abstract class ConfigSelenide implements ITestListener {
         Configuration.assertionMode = AssertionMode.SOFT;
         Configuration.fileDownload = FileDownloadMode.HTTPGET;
         Configuration.browserSize = "1920x1080";
-
-
-        setUpWebDriver(browser);
     }
 
     protected void setUpWebDriver(String browser) {

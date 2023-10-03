@@ -1,0 +1,1 @@
+{"uuid":"1b1211a8-e393-4a9e-9dd5-fdd4fafb5f1f","name":"SwoopGeTest.openSwoopGe","children":["b69951ea-dba9-4f92-9ecb-a55f6a2ddcf7"],"description":"","befores":[{"name":"openSwoopGe","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1696358829292,"stop":1696358842062}],"afters":[],"start":1696358829292,"stop":1696358842062}

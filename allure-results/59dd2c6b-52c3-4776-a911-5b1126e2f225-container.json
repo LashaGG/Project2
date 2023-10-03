@@ -1,1 +1,0 @@
-{"uuid":"59dd2c6b-52c3-4776-a911-5b1126e2f225","name":"SwoopGeTest.openDemoqa","children":["68868bcb-090a-4b97-8cba-11ba2f518d6c"],"description":"","befores":[{"name":"openDemoqa","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1696249796964,"stop":1696249818162}],"afters":[],"start":1696249796964,"stop":1696249818162}

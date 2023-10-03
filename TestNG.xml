@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="SwoopGeSuite" parallel="methods" thread-count="8">
+<suite name="SwoopGeSuite" parallel="methods" thread-count="2"><!-- მეტი რომ გავხადო ჩატვირთვას ვერ ახერხებს-->
     <listeners>
         <listener class-name="SwoopGeTest"/>
     </listeners>
     <test name="test">
         <groups>
             <run>
-                <include name="SwoopGeGroup"/>
+                <include name="Regression[1-5]"/>
             </run>
         </groups>
         <classes>

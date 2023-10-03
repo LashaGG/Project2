@@ -1,1 +1,0 @@
-{"uuid":"60b2e0d6-688e-4046-aff2-15c0436af8fb","name":"Default Suite","children":["a83608c1-bab0-40c3-a163-08d567957e64"],"befores":[{"name":"configureSelenide","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1696153606330,"stop":1696153606781}],"afters":[],"start":1696153606295,"stop":1696153638875}
