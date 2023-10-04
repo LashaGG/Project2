@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Ignored Tests",
+    "matchedStatuses": [
+      "skipped"
+    ]
+  },
+  {
+    "name": "Passed Tests",
+    "matchedStatuses": [
+      "passed"
+    ]
+  },
+  {
+    "name": "Assertion Error",
+    "traceRegex": ".*java.lang.AssertionError:.*"
+  },
+  {
+    "name": "Failed Tests",
+    "matchedStatuses": [
+      "failed"
+    ]
+  },
+  {
+    "name": "Broken Tests",
+    "matchedStatuses": [
+      "broken"
+    ]
+  }
+]
