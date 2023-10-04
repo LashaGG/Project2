@@ -40,7 +40,7 @@ public class ProductsAndServicesSteps implements IProductsAndServicesSteps {
     @Step("Click on 'ძებნა' Button and Wait Until jQuery Requests Complete")
     public ProductsAndServicesSteps clickOnDzebnaButton() {
         Selenide.executeJavaScript("arguments[0].click()", page.dzebnaButton.shouldHave(Condition.exist));
-        waitUntilJQueryIsActive();
+        waitUntilJQueryIsActive();//ან ეს ან Selenide.sleep უნდა დამეწერა
         return this;
     }
 

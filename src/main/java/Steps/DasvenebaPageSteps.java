@@ -14,38 +14,43 @@ public class DasvenebaPageSteps implements IProductsAndServicesSteps {
         return this;
     }
 
-    @Override//Step ანოტაციები არ გავუწერე, რაგდან  ProductsAndServicesSteps() მეთოდებს
-    // უკვე აქვთ ანოტაციები და Allure report-ში 2-ჯერ გამოჩნდებოდა Step ანოტაცია
+    @Override
+    @Step
     public DasvenebaPageSteps clickOnProduct(int index) {
         new ProductsAndServicesSteps().clickOnProduct(index);
         return this;
     }
 
     @Override
+    @Step
     public DasvenebaPageSteps setMinPrice(Integer minPrice) {
         new ProductsAndServicesSteps().setMinPrice(minPrice);
         return this;
     }
 
     @Override
+    @Step
     public DasvenebaPageSteps setMaxPrice(Integer maxPrice) {
         new ProductsAndServicesSteps().setMaxPrice(maxPrice);
         return this;
     }
 
     @Override
+    @Step
     public DasvenebaPageSteps clickOnDzebnaButton() {
         new ProductsAndServicesSteps().clickOnDzebnaButton();
         return this;
     }
 
     @Override
+    @Step
     public DasvenebaPageSteps addFirstOfferToFavorites() {
         new ProductsAndServicesSteps().addFirstOfferToFavorites();
         return this;
     }
 
     @Override
+    @Step
     public DasvenebaPageSteps selectSortByPriceDecrease() {
         new ProductsAndServicesSteps().selectSortByPriceDecrease();
         return this;

@@ -1,4 +1,4 @@
-package HelperClasses;
+package ConfigClasses;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Attachment;
@@ -8,11 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public abstract class Listener implements ITestListener {
+public class ListenerConfig implements ITestListener {
 
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] attachScreenshot(WebDriver driver) {
-        System.out.println("Screenshot was taken");
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 

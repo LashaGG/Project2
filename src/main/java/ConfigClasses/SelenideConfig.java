@@ -1,37 +1,28 @@
-package HelperClasses;
+package ConfigClasses;
 
 import com.codeborne.selenide.AssertionMode;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.FileDownloadMode;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.testng.SoftAsserts;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.qameta.allure.Attachment;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
 @Listeners({SoftAsserts.class})
-public abstract class ConfigSelenide extends Listener {
-
+public abstract class SelenideConfig {
 
     protected String browser;
     protected int waitSeconds;
     protected SoftAssert softAssert;
 
-    public ConfigSelenide() {
+    public SelenideConfig() {
         this(20, "chrome");
     }
 
-    public ConfigSelenide(int waitSeconds, String browser) {
+    public SelenideConfig(int waitSeconds, String browser) {
         this.waitSeconds = waitSeconds;
         this.browser = browser;
     }
@@ -70,6 +61,5 @@ public abstract class ConfigSelenide extends Listener {
     public void tearDown() {
         closeWebDriver();
     }
-
 
 }
