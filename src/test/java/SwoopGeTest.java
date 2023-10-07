@@ -26,7 +26,7 @@ import static com.codeborne.selenide.Selenide.*;
 @Epic("SwoopGe Regression Tests")
 public class SwoopGeTest extends SelenideConfig {
     public SwoopGeTest() {
-        super(30, "chrome");
+        super(60, "chrome");
     }
 
     @BeforeMethod(alwaysRun = true)
